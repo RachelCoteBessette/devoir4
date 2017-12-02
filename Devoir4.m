@@ -1,4 +1,4 @@
-function [xi yi zi face]=Devoir4(nout,nin,poso)
+function [xi yi zi face] = Devoir4(nout,nin,poso)
 
 % Cette fonction retourne les valeurs des points à colorier, 
 % où l'indice i pour chaque vecteur concerne le même point.
@@ -20,6 +20,13 @@ N = 100; %Arbitraire à revoir
 % Nombre de division de l'angle phi (azimut) (par rapport a l'Axe x)
 M = 100; %Arbitraire à revoir
 
+% Structure temporaire permettant de contenir les informations des pts a
+% colorier
+nbPts = N*M;
+nbPtsAColorier = 0;
+ptsAColorier = zeros(nbPts, 4);
+
+
 % 1) Trouver l'angle min et max par rapport a l'axe x (azimut) et z
 % (polaire)
 [thetaMin, thetaMax, phiMin, phiMax] = calculAnglesThetaPhiMinMax(poso);
@@ -31,63 +38,62 @@ deltaPhi = (phiMax-phiMin)/M;
 % 3) Parcourir tous les rayons afin de tous les traités
 for n = 1:N
     
-   for m = 1:M
-       
-       distTotale = 0; %Distance totale parcourue par le rayon. utile s il frappe le prisme
-       
-       theta = thetaMin + deltaTheta(n-1);
-       phi = phiMin + deltaPhi(n-1);
-       
-       %vecteur unitaire représentant la direction dans laquelle le rayon
-       %par de l'obervateur (u)
-       u = calculDirectionObs(theta,phi);
-       
-       % Fonction qui trouve le pts de collision (collisionCylindre est un boolean)
-       [collisionCylindre, ptsCollision] = verifierCollisionCylindre(u,poso);
-       
-       if(collisionCylindre)
-           estReflechi = verifierReflexion(ptsCollision,u,nout,nin);
-           
-           if(~estReflechi) %est entre dans le cylindre
-               [i, j, k] = calculVecteursUnitairesijk(u,ptsCollision);
-               ut = calculRefraction(ptsCollision,i,j,k);
-               
-               distTotale = distTotale + calculNorme(poso,ptsCollision);
-               
-               nbIterationMax = 100;
-               nbIteration = 0;
-               finTrajetRayon = false;
-               while(~finTrajetRayon && nbIteration < nbIterationMax)
-                   nbIteration = nbIteration + 1;
-                   
-                   ancienPtsCollision = ptsCollision;
-                   [collisionPrisme, ptsCollision] = verifierCollisionPrisme(ut,ancienPtsCollision);
-                   
-                   if(collisionPrisme) % a touche le prisme
-                       distTotale = distTotale + calculNorme(ancienPtsCollision,ptsCollision);
-                       finTrajetRayon = true;
-                       %TODO calculer xi yi zi face du pts et mettre dans 
-                       %une structure
+    for m = 1:M
+        
+        distTotale = 0; %Distance totale parcourue par le rayon. utile s il frappe le prisme
+        
+        theta = thetaMin + deltaTheta(n-1);
+        phi = phiMin + deltaPhi(n-1);
+        
+        %vecteur unitaire représentant la direction dans laquelle le rayon
+        %par de l'obervateur (u)
+        u = calculDirectionObs(theta,phi);
+        
+        % Fonction qui trouve le pts de collision (collisionCylindre est un boolean)
+        [collisionCylindre, ptsCollision] = verifierCollisionCylindre(u,poso);
+        
+        if(collisionCylindre)
+            estReflechi = verifierReflexion(ptsCollision,u,nout,nin);
+            
+            if(~estReflechi) %est entre dans le cylindre
+                [i, j, k] = calculVecteursUnitairesijk(u,ptsCollision);
+                ut = calculRefraction(ptsCollision,i,j,k);
+                
+                distTotale = distTotale + calculNorme(poso,ptsCollision);
+                
+                nbIterationMax = 100;
+                nbIteration = 0;
+                finTrajetRayon = false;
+                while(~finTrajetRayon && nbIteration < nbIterationMax)
+                    nbIteration = nbIteration + 1;
+                    
+                    ancienPtsCollision = ptsCollision;
+                    [collisionPrisme, ptsCollision] = verifierCollisionPrisme(ut,ancienPtsCollision);
+                    
+                    if(collisionPrisme) % a touche le prisme
+                        distTotale = distTotale + calculNorme(ancienPtsCollision,ptsCollision);
+                        finTrajetRayon = true;
+                        %TODO calculer xi yi zi face du pts et mettre dans
+                        %une structure
+                        [x,y,z,face] = calculerPtsAColorier(ptsCollision,distTotale,ut);
+                        nbPtsAColorier = nbPtsAColorier +1;
+                        ptsAColorier(idx,:) = [x y z face]; %trouver idx et verifier la correspondance des dimentions de matrices
+                        
+                    else % entre en collision avec le cylindre
+                        [collisionCylindre, ptsCollision] = verifierCollisionCylindre(ut,ancienPtsCollision);
+                        distTotale = distTotale + calculNorme(ancienPtsCollision,ptsCollision);
+                        
+                        estReflechi = verifierReflexion(ptsCollision,ut,nout,nin);
                        
-                   else % entre en collision avec le cylindre
-                       [collisionCylindre, ptsCollision] = verifierCollisionCylindre(ut,ancienPtsCollision);
-                       distTotale = distTotale + calculNorme(ancienPtsCollision,ptsCollision);
-                       
-                       estReflechi = verifierReflexion(ptsCollision,ut,nout,nin);
-           
-                       if(estReflechi) %reste dans le cylindre (reflexion interne)
-                           [i, j, k] = calculVecteursUnitairesijk(ut,ptsCollision);
-                           ut = calculDirectionApresReflexion(ut,i);
-                       end
-                       
-                   end
-                   
-               end
-               
-           end
-           
-       end
-       
-   end
-   
+                        if(estReflechi) %reste dans le cylindre (reflexion interne)
+                            [i, j, k] = calculVecteursUnitairesijk(ut,ptsCollision);
+                            ut = calculDirectionApresReflexion(ut,i);
+                        end
+                    end
+                end
+            end
+        end
+    end
 end
+
+% 4) Remplir les vecteurs xi yi zi face à l'aide de la matrice ptsAColorier

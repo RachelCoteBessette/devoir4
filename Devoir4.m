@@ -1,4 +1,4 @@
-function [xi yi zi face] = Devoir4(nout,nin,poso)
+function [xi, yi, zi, face] = Devoir4(nout,nin,poso)
 
 % Cette fonction retourne les valeurs des points à colorier, 
 % où l'indice i pour chaque vecteur concerne le même point.
@@ -78,16 +78,16 @@ for n = 1:N
                         %une structure
                         [x,y,z,face] = calculerPtsAColorier(ptsCollision,distTotale,ut);
                         nbPtsAColorier = nbPtsAColorier +1;
-                        ptsAColorier(idx,:) = [x y z face]; %trouver idx et verifier la correspondance des dimentions de matrices
+                        ptsAColorier(n+((m-1)*M),:) = [x y z face]; %Verifier la correspondance des dimentions de matrices
                         
                     else % entre en collision avec le cylindre
-                        [collisionCylindre, ptsCollision] = verifierCollisionCylindre(ut,ancienPtsCollision);
+                        [~, ptsCollision] = verifierCollisionCylindre(ut,ancienPtsCollision);
                         distTotale = distTotale + calculNorme(ancienPtsCollision,ptsCollision);
                         
                         estReflechi = verifierReflexion(ptsCollision,ut,nout,nin);
                        
                         if(estReflechi) %reste dans le cylindre (reflexion interne)
-                            [i, j, k] = calculVecteursUnitairesijk(ut,ptsCollision);
+                            [i, ~, ~] = calculVecteursUnitairesijk(ut,ptsCollision);
                             ut = calculDirectionApresReflexion(ut,i);
                         end
                     end
@@ -98,3 +98,15 @@ for n = 1:N
 end
 
 % 4) Remplir les vecteurs xi yi zi face à l'aide de la matrice ptsAColorier
+
+xi = zeros(nbPtsAColorier);
+yi = zeros(nbPtsAColorier);
+zi = zeros(nbPtsAColorier);
+face = zeros(nbPtsAColorier);
+
+for p = 1:nbPtsAColorier
+    xi(p) = ptsAColorier(p,1);
+    yi(p) = ptsAColorier(p,2);
+    zi(p) = ptsAColorier(p,3);
+    face(p) = ptsAColorier(p,4);
+end

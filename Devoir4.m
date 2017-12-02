@@ -47,6 +47,7 @@ for n = 1:N
         
         %vecteur unitaire représentant la direction dans laquelle le rayon
         %par de l'obervateur (u)
+        
         u = calculDirectionObs(theta,phi);
         
         % Fonction qui trouve le pts de collision (collisionCylindre est un boolean)

@@ -50,8 +50,8 @@ for n = 1:N
         
         u = calculDirectionObs(theta,phi);
         
-        % Fonction qui trouve le pts de collision (collisionCylindre est un boolean)
-        [collisionCylindre, ptsCollision] = verifierCollisionCylindre(u,poso);
+        % Fonction qui trouve le pt de collision (collisionCylindre est un boolean)
+        [collisionCylindre, ptCollision] = verifierCollisionCylindre(u,poso);
         
         if(collisionCylindre)
             estReflechi = verifierReflexion(ptsCollision,u,nout,nin);

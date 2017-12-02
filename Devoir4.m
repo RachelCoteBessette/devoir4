@@ -22,36 +22,57 @@ M = 100; %Arbitraire à revoir
 
 % 1) Trouver l'angle min et max par rapport a l'axe x (azimut) et z
 % (polaire)
-[thetaMin thetaMax phiMin phiMax] = calculAnglesThetaPhiMinMax(poso);
+[thetaMin, thetaMax, phiMin, phiMax] = calculAnglesThetaPhiMinMax(poso);
 
 % 2) Trouver delta angle en x et y
 deltaTheta = (thetaMax-thetaMin)/N;
 deltaPhi = (phiMax-phiMin)/M;
 
 % 3) Parcourir tous les rayons afin de tous les traités
-for i = 1:N
+for n = 1:N
     
-   for j = 1:M
+   for m = 1:M
        
-       theta = thetaMin + deltaTheta(i-1);
-       phi = phiMin + deltaPhi(i-1);
+       distTotale = 0; %Distance totale parcourue par le rayon, utile s il frappe le prisme
+       
+       theta = thetaMin + deltaTheta(n-1);
+       phi = phiMin + deltaPhi(n-1);
        
        %vecteur unitaire représentant la direction dans laquelle le rayon
        %par de l'obervateur (u)
        u = calculDirectionObs(theta,phi);
        
-       % Fonction qui trouve le pts de collision (collision est un boolean)     
-       [collision ptsCollision] = verifierCollision(u,poso);
+       % Fonction qui trouve le pts de collision (collision est un boolean)
+       [collisionCylindre, ptsCollision] = verifierCollisionCylindre(u,poso);
        
-       if(collision)
+       if(collisionCylindre)
            estReflechi = verifierReflexion(ptsCollision,u,nout,nin);
            
-           if(estReflechi)
+           [i, j, k] = calculVecteursUnitairesijk();
+           
+           if(~estReflechi)
+               ut = calculRefraction(ptsCollision,i,j,k);
                
+               distTotale = distTotale + calculNorme(poso,ptsCollision);
                
+               finTrajetRayon = false;
+               while(~finTrajetRayon)
+                   ancienPtsCollision = ptsCollision;
+                   [collisionPrisme, ptsCollision] = verifierCollisionPrisme(ut,ancienPtsCollision);
+                   
+                   if(collisionPrisme)
+                       distTotale = distTotale + calculNorme(ancienPtsCollision,ptsCollision);
+                       finTrajetRayon = true;
+                       
+                   else
+                       [collisionCylindre, ptsCollision] = verifierCollisionCylindre(ut,ancienPtsCollision);
+                       
+                   end
+                   
+               
+               end
                
            end
-           
            
        end
        

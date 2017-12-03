@@ -15,28 +15,28 @@ function [collisionCylindre, ptCollision] = verifierCollisionCylindre(u, poso, e
 %-----------------lorsquon part de lexterieur du cyl----------------%
 %u = [0.01/sqrt(0.0027), 0.01/sqrt(0.0027), 0.05/sqrt(0.0027)];
 %poso = [0,0,0];  
-%estDansCylindre = false; %OK : resultat obtenu correspond a attendu
+%estDsCylindre = false; %OK : resultat obtenu correspond a attendu
 
 %u = [0/sqrt(0.0125), 0.02/sqrt(0.0125), 0.11/sqrt(0.0125)];
 %poso = [0,0,0]; 
-%estDansCylindre = false; %OK : resultat obtenu correspond a attendu
+%estDsCylindre = false; %OK : resultat obtenu correspond a attendu
 
 %u = [0.02/sqrt(0.2508), 0.02/sqrt(0.2508), 0.50/sqrt(0.2508)];
 %poso = [0,0,0]; %OK : resultat obtenu correspond a attendu
-%estDansCylindre = false; %OK : resultat obtenu correspond a attendu
+%estDsCylindre = false; %OK : resultat obtenu correspond a attendu
 
 %u = [0.01/sqrt(0.0027), 0.01/sqrt(0.0027), 0.05/sqrt(0.0027)];
 %poso = [0,0,0]; % point obtenu avec premier test (pt collision paroi cylindre)
-%estDansCylindre = false; % OK : resultat obtenu correspond a attendu
+%estDsCylindre = false; % OK : resultat obtenu correspond a attendu
 
 %-----------------lorsquon part de linterieur du cyl----------------%
 %u = [0.01/sqrt(0.0002), 0.01/sqrt(0.0002), 0];
 %poso = [0.0259,0.0259,0.1293]; % point obtenu avec premier test (pt collision paroi cylindre)
-%estDansCylindre = true; %OK : resultat obtenu correspond a attendu
+%estDsCylindre = true; %OK : resultat obtenu correspond a attendu
 
 %u = [0.01/sqrt(0.0027), 0.01/sqrt(0.0027), 0.05/sqrt(0.0027)];
 %poso = [0.0259,0.0259,0.1293]; % point obtenu avec premier test (pt collision paroi cylindre)
-%estDansCylindre = true; %ce test est base sur dernier test exterieur du
+%estDsCylindre = true; %ce test est base sur dernier test exterieur du
 %cyl %OK: resultat obtenu semble faire du sens (va frapper le top du disc
 %du haut)
 % ----/tests
@@ -66,7 +66,7 @@ else  % si jai 2 resultats => collision possible
     pointCollision1 = [real_sol(1) * u(1) + poso(1), real_sol(1) * u(2) + poso(2), real_sol(1) * u(3) + poso(3)];
     pointCollision2 = [real_sol(2) * u(1) + poso(1), real_sol(2) * u(2) + poso(2), real_sol(2) * u(3) + poso(3)];
 
-    if (estDansCylindre)
+    if (estDsCylindre)
         % discarter le dernier point ou il y a eu collision (parametre poso)
         if (isequaln(round(double(pointCollision1),3),round(poso, 3)))
             pointCollisionAValiderEnZ = pointCollision2;
@@ -97,9 +97,9 @@ zBasCylindre = centreCylindre(3) - hauteurCylindre/2;
 
 if (pointCollisionAValiderEnZ(3) >= zBasCylindre && pointCollisionAValiderEnZ(3) <= zHautCylindre)
     collisionCylindre = true;
-    ptCollision = pointCollisionAValiderEnZ;
+    ptCollision = double(pointCollisionAValiderEnZ);
 else %sil est hors limite en z
-    if(estDansCylindre) %ca se peut quil frappe le top/bas du cylindre
+    if(estDsCylindre) %ca se peut quil frappe le top/bas du cylindre
         % est-ce quil a frappe en haut ou en bas du cylindre
         aFrappeEnHaut = (pointCollisionAValiderEnZ(3) - poso(3)) > 0;
         z = 0;
@@ -116,7 +116,7 @@ else %sil est hors limite en z
         y = solK * u(2) + poso(2);
         
         collisionCylindre = true;
-        ptCollision = [x, y, z];
+        ptCollision = double([x, y, z]);
     else
         collisionCylindre = false;
         ptCollision = [];

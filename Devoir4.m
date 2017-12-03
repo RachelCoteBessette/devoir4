@@ -42,8 +42,8 @@ for n = 1:N
         
         distTotale = 0; %Distance totale parcourue par le rayon. utile s il frappe le prisme
         
-        theta = thetaMin + deltaTheta(n-1);
-        phi = phiMin + deltaPhi(n-1);
+        theta = thetaMin + deltaTheta*(n-1);
+        phi = phiMin + deltaPhi*(m-1);
         
         %vecteur unitaire représentant la direction dans laquelle le rayon
         %par de l'obervateur (u)
@@ -54,13 +54,13 @@ for n = 1:N
         [collisionCylindre, ptCollision] = verifierCollisionCylindre(u,poso);
         
         if(collisionCylindre)
-            estReflechi = verifierReflexion(ptsCollision,u,nout,nin);
+            estReflechi = verifierReflexion(ptCollision,u,nout,nin);
             
             if(~estReflechi) %est entre dans le cylindre
-                [i, j, k] = calculVecteursUnitairesijk(u,ptsCollision);
-                ut = calculRefraction(ptsCollision,i,j,k);
+                [i, j, k] = calculVecteursUnitairesijk(u,ptCollision);
+                ut = calculRefraction(ptCollision,i,j,k);
                 
-                distTotale = distTotale + calculNorme(poso,ptsCollision);
+                distTotale = distTotale + calculNorme(poso,ptCollision);
                 
                 nbIterationMax = 100;
                 nbIteration = 0;
@@ -68,26 +68,26 @@ for n = 1:N
                 while(~finTrajetRayon && nbIteration < nbIterationMax)
                     nbIteration = nbIteration + 1;
                     
-                    ancienPtsCollision = ptsCollision;
-                    [collisionPrisme, ptsCollision] = verifierCollisionPrisme(ut,ancienPtsCollision);
+                    ancienPtCollision = ptCollision;
+                    [collisionPrisme, ptCollision] = verifierCollisionPrisme(ut,ancienPtCollision);
                     
                     if(collisionPrisme) % a touche le prisme
-                        distTotale = distTotale + calculNorme(ancienPtsCollision,ptsCollision);
+                        distTotale = distTotale + calculNorme(ancienPtCollision,ptCollision);
                         finTrajetRayon = true;
                         %TODO calculer xi yi zi face du pts et mettre dans
                         %une structure
-                        [x,y,z,face] = calculerPtsAColorier(ptsCollision,distTotale,ut);
+                        [x,y,z,face] = calculerPtsAColorier(ptCollision,distTotale,ut);
                         nbPtsAColorier = nbPtsAColorier +1;
                         ptsAColorier(n+((m-1)*M),:) = [x y z face]; %Verifier la correspondance des dimentions de matrices
                         
                     else % entre en collision avec le cylindre
-                        [~, ptsCollision] = verifierCollisionCylindre(ut,ancienPtsCollision);
-                        distTotale = distTotale + calculNorme(ancienPtsCollision,ptsCollision);
+                        [~, ptCollision] = verifierCollisionCylindre(ut,ancienPtCollision);
+                        distTotale = distTotale + calculNorme(ancienPtCollision,ptCollision);
                         
-                        estReflechi = verifierReflexion(ptsCollision,ut,nout,nin);
+                        estReflechi = verifierReflexion(ptCollision,ut,nout,nin);
                        
                         if(estReflechi) %reste dans le cylindre (reflexion interne)
-                            [i, ~, ~] = calculVecteursUnitairesijk(ut,ptsCollision);
+                            [i, ~, ~] = calculVecteursUnitairesijk(ut,ptCollision);
                             ut = calculDirectionApresReflexion(ut,i);
                         end
                     end

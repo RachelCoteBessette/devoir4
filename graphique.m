@@ -1,45 +1,18 @@
-function graphique(essai)
+function graphique(poso, xi, yi, zi, face)
 
-global positionsBalleOpt1 positionsBalleOpt2 positionsBalleOpt3;
-
-% Table
-[hauteurTable, longueurTable, largeurTable] = getDonneesTable();
-
-tableX = [0 longueurTable longueurTable 0 0];
-tableY = [0 0 largeurTable largeurTable 0];
-tableZ = [hauteurTable hauteurTable hauteurTable hauteurTable hauteurTable];
-
-% filet
-[hauteurFilet, largeurFilet] = getDonneesFilet();
-
-overFilet = (largeurFilet - largeurTable)/2;
-    
-filetX = [(longueurTable/2) (longueurTable/2) (longueurTable/2) (longueurTable/2) (longueurTable/2)];
-filetY = [-overFilet (largeurTable + overFilet) (largeurTable + overFilet) -overFilet -overFilet];
-filetZ = [hauteurTable hauteurTable (hauteurTable+hauteurFilet) (hauteurTable+hauteurFilet) hauteurTable];
-
-% Limites du graphe
-limiteX = [0 3];
-limiteY = [-0.5 2];
-limiteZ = [0 2];
-
-% Créer le graphique
+% Dessin du cylindre
+[R, h, rc] = getConstantesCylindre();
+[x,y,z] = cylinder;
 figure
-plot3( positionsBalleOpt1(:, 1), positionsBalleOpt1(:, 2), positionsBalleOpt1(:, 3), '-r',...
-      positionsBalleOpt2(:, 1), positionsBalleOpt2(:, 2), positionsBalleOpt2(:, 3), '-g',...
-      positionsBalleOpt3(:, 1), positionsBalleOpt3(:, 2), positionsBalleOpt3(:, 3), '-b',...	
-      tableX, tableY, tableZ, '-k', ...
-      filetX, filetY, filetZ, '-k');
+surf(x*R+rc(1),y*R+rc(2),z*h+(rc(3)-h/2),'FaceAlpha',0,'EdgeAlpha',.3)
+axis([0 0.1 0 0.1 0 0.2])
 
-% nommer les axes 
-xlabel('x');
-ylabel('y');
-zlabel('z');
+hold on % permet d'autre chose au graphique deja existent (superposition de graphique)
 
-xlim(limiteX);
-ylim(limiteY);
-zlim(limiteZ);
+% Ajout de l'observateur
+scatter3(poso(1),poso(2),poso(3));
 
-legend('option 1','option 2', 'option 3');
+% Ajout de l'image
 
-end
+
+hold off

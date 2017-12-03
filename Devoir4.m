@@ -84,7 +84,7 @@ for n = 1:N
                         [~, ptCollision] = verifierCollisionCylindre(ut,ancienPtCollision);
                         distTotale = distTotale + calculNorme(ancienPtCollision,ptCollision);
                         
-                        estReflechi = verifierReflexion(ptCollision,ut,nout,nin);
+                        estReflechi = verifierReflexion(ptCollision,ut,nin,nout);
                        
                         if(estReflechi) %reste dans le cylindre (reflexion interne)
                             [i, ~, ~] = calculVecteursUnitairesijk(ut,ptCollision);

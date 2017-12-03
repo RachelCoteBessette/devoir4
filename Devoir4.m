@@ -58,7 +58,7 @@ for n = 1:N
             
             if(~estReflechi) %est entre dans le cylindre
                 [i, j, k] = calculVecteursUnitairesijk(u,ptCollision);
-                ut = calculRefraction(ptCollision,i,j,k);
+                ut = calculRefraction(u,i,j,nout,nin);
                 
                 distTotale = distTotale + norm(ptCollision-poso);
                 

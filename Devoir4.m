@@ -76,7 +76,7 @@ for n = 1:N
                         finTrajetRayon = true;
                         %TODO calculer xi yi zi face du pts et mettre dans
                         %une structure
-                        [x,y,z,face] = calculerPtsAColorier(ptCollision,distTotale,ut);
+                        [x,y,z,face] = calculerPtsAColorier(poso,distTotale,u);
                         nbPtsAColorier = nbPtsAColorier +1;
                         ptsAColorier(n+((m-1)*M),:) = [x y z face]; %Verifier la correspondance des dimentions de matrices
 

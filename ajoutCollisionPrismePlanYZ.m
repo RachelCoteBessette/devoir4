@@ -20,8 +20,8 @@ if (not(isempty(k))) % si on croise donc le plan x = 3
     z = k*u(3) + ancienPtCollision(3);
     
     % verifier que la solution est entre les limites (y et z)
-    if (centrePrisme(2)-(dimensionPrisme(2)/2)> y ...
-            && centrePrisme(2)+(dimensionPrisme(2)/2)< y ...
+    if (centrePrisme(2)-(dimensionPrisme(2)/2)< y ...
+            && centrePrisme(2)+(dimensionPrisme(2)/2)> y ...
             && centrePrisme(3)-(dimensionPrisme(3)/2) < z ...
             && centrePrisme(3)+(dimensionPrisme(3)/2) > z)
         numPlan = -1;
@@ -31,7 +31,7 @@ if (not(isempty(k))) % si on croise donc le plan x = 3
             numPlan = 2;
         end
             
-        ajoutCollision =  vertcat(collisions, [double(valeurX), double(y), double(z),numPlan]);
+        ajoutCollision = [double(valeurX), double(y), double(z),numPlan];
     else
         ajoutCollision = [];
     end    

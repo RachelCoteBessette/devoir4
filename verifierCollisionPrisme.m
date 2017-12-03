@@ -1,4 +1,4 @@
-function [collisionPrisme, ptCollision] = verifierCollisionPrisme(ut,ancienPtCollision)
+function [collisionPrisme, ptCollision, face] = verifierCollisionPrisme(ut,ancienPtCollision)
 
 % jai decider que ptCollision allait retourner quelque chose de la forme
 % [x, y, z, numeroPlanCollision]
@@ -70,7 +70,7 @@ if (not(isempty(collisions)))
         distEntrePlan1EtPoint = norm(collisions(1, 1:3) - ancienPtCollision); %extract row1, colonne 1 a 3
         distEntrePlan2EtPoint = norm(collisions(2, 1:3) - ancienPtCollision); 
         
-        shortestDistance = min(distEntrePlan1EtPoint, distantEntrePlan2EtPoint);
+        shortestDistance = min(distEntrePlan1EtPoint, distEntrePlan2EtPoint);
         
         if (shortestDistance == distEntrePlan1EtPoint)
             collisionPrisme = true;
@@ -79,11 +79,13 @@ if (not(isempty(collisions)))
             % ptCollision = collisions(1);
             % si tu ne veut pas le dernier element (numPlan), utilise ca: 
              ptCollision = collisions(1, 1:3);
+             face = collisions(1, 4);
             return;
-        elseif (shortestDistance == distEntrePlan2EtPoinnt)
+        elseif (shortestDistance == distEntrePlan2EtPoint)
             collisionPrisme = true;
             %ptColision = collisions(2);
              ptCollision = collisions(2, 1:3);
+             face = collisions(2, 4);
             return;
         else 
             disp("an error occured (verifierCollisionPrisme), this should not happen");

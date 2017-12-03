@@ -23,8 +23,8 @@ if (not(isempty(k)))
     y = k*u(2) + ancienPtCollision(2);
     
     % verifier que la solution est entre les limites (z et x)
-    if (centrePrisme(1)-(dimensionPrisme(1)/2)> x ...
-            && centrePrisme(1)+(dimensionPrisme(1)/2)< x ...
+    if (centrePrisme(1)-(dimensionPrisme(1)/2)< x ...
+            && centrePrisme(1)+(dimensionPrisme(1)/2)> x ...
             && centrePrisme(2)-(dimensionPrisme(2)/2) < y ...
             && centrePrisme(2)+(dimensionPrisme(2)/2) > y)
         numPlan = -1;
@@ -34,7 +34,7 @@ if (not(isempty(k)))
             numPlan = 6;
         end
             
-        ajoutCollision =  vertcat(collisions, [double(x), double(y), double(valeurZ),numPlan]);
+        ajoutCollision = [double(x), double(y), double(valeurZ),numPlan];
     else
         ajoutCollision = [];
     end    

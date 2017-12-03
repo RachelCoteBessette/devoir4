@@ -1,6 +1,6 @@
-function [x,y,z,face] = calculerPtsAColorier(poso,distTotale,uinit)
+function [x,y,z] = calculerPtsAColorier(poso,distTotale,uinit)
 
-rn = poso + distTotale*uinit;
+rn = transpose(poso) + distTotale*uinit;
 
 x = rn(1);
 y = rn(2);

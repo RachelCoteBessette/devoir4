@@ -69,16 +69,16 @@ for n = 1:N
                     nbIteration = nbIteration + 1;
 
                     ancienPtCollision = ptCollision;
-                    [collisionPrisme, ptCollision] = verifierCollisionPrisme(ut,ancienPtCollision);
+                    [collisionPrisme, ptCollision, faceTrouve] = verifierCollisionPrisme(ut,ancienPtCollision);
 
                     if(collisionPrisme) % a touche le prisme
                         distTotale = distTotale + norm(ptCollision - ancienPtCollision);
                         finTrajetRayon = true;
                         %TODO calculer xi yi zi face du pts et mettre dans
                         %une structure
-                        [x,y,z,face] = calculerPtsAColorier(poso,distTotale,u);
+                        [x,y,z] = calculerPtsAColorier(poso,distTotale,u);
                         nbPtsAColorier = nbPtsAColorier +1;
-                        ptsAColorier(n+((m-1)*M),:) = [x y z face]; %Verifier la correspondance des dimentions de matrices
+                        ptsAColorier(nbPtsAColorier,:) = [x y z faceTrouve]; %Verifier la correspondance des dimentions de matrices
 
                     else % entre en collision avec le cylindre
                         [~, ptCollision] = verifierCollisionCylindre(ut,ancienPtCollision, true);
@@ -89,6 +89,8 @@ for n = 1:N
                         if(estReflechi) %reste dans le cylindre (reflexion interne)
                             [i, ~, ~] = calculVecteursUnitairesijk(ut,ptCollision,true);
                             ut = calculDirectionApresReflexion(ut,i);
+                        else
+                            finTrajetRayon = true;
                         end
                     end
                 end

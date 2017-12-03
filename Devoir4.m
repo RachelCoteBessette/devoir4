@@ -82,7 +82,7 @@ for n = 1:N
                         
                     else % entre en collision avec le cylindre
                         [~, ptCollision] = verifierCollisionCylindre(ut,ancienPtCollision, true);
-                        distTotale = distTotale + norm(ancienPtCollision,ptCollision);
+                        distTotale = distTotale + norm(ptCollision - ancienPtCollision);
                         
                         estReflechi = verifierReflexion(ptCollision,ut,nin,nout);
                        

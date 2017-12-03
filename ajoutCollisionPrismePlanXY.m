@@ -5,12 +5,14 @@ ajoutCollision = [];
 
 [dimensionPrisme, centrePrisme] = getConstantesPrisme();
 
-syms valeurK;
-equ = valeurZ == valeurK * u(3) + ancienPtCollision(3);
-valeurK = solve(equ, valeurK);
+%syms valeurK;
+%equ = valeurZ == valeurK * u(3) + ancienPtCollision(3);
+%valeurK = vpasolve(equ, valeurK);
 
 %enlever valeurs imaginaires il y en a 
-k = valeurK(imag(valeurK) == 0);
+%k = valeurK(imag(valeurK) == 0);
+
+k = (valeurZ - ancienPtCollision(3))/u(3);
 
 % if the sln has no imaginary numbers and is not empty (found a k1)
 if (not(isempty(k)))

@@ -57,7 +57,7 @@ for n = 1:N
             estReflechi = verifierReflexion(ptCollision,u,nout,nin);
             
             if(~estReflechi) %est entre dans le cylindre
-                [i, j, k] = calculVecteursUnitairesijk(u,ptCollision);
+                [i, j, k] = calculVecteursUnitairesijk(u,ptCollision,false);
                 ut = calculRefraction(ptCollision,i,j,k);
                 
                 distTotale = distTotale + norm(ptCollision-poso);
@@ -87,7 +87,7 @@ for n = 1:N
                         estReflechi = verifierReflexion(ptCollision,ut,nin,nout);
                        
                         if(estReflechi) %reste dans le cylindre (reflexion interne)
-                            [i, ~, ~] = calculVecteursUnitairesijk(ut,ptCollision);
+                            [i, ~, ~] = calculVecteursUnitairesijk(ut,ptCollision,true);
                             ut = calculDirectionApresReflexion(ut,i);
                         end
                     end

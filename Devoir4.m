@@ -60,7 +60,7 @@ for n = 1:N
                 [i, j, k] = calculVecteursUnitairesijk(u,ptCollision);
                 ut = calculRefraction(ptCollision,i,j,k);
                 
-                distTotale = distTotale + calculNorme(poso,ptCollision);
+                distTotale = distTotale + norm(ptCollision-poso);
                 
                 nbIterationMax = 100;
                 nbIteration = 0;
@@ -72,7 +72,7 @@ for n = 1:N
                     [collisionPrisme, ptCollision] = verifierCollisionPrisme(ut,ancienPtCollision);
                     
                     if(collisionPrisme) % a touche le prisme
-                        distTotale = distTotale + calculNorme(ancienPtCollision,ptCollision);
+                        distTotale = distTotale + norm(ptCollision - ancienPtCollision);
                         finTrajetRayon = true;
                         %TODO calculer xi yi zi face du pts et mettre dans
                         %une structure
@@ -82,7 +82,7 @@ for n = 1:N
                         
                     else % entre en collision avec le cylindre
                         [~, ptCollision] = verifierCollisionCylindre(ut,ancienPtCollision);
-                        distTotale = distTotale + calculNorme(ancienPtCollision,ptCollision);
+                        distTotale = distTotale + norm(ptCollision - ancienPtCollision);
                         
                         estReflechi = verifierReflexion(ptCollision,ut,nin,nout);
                        

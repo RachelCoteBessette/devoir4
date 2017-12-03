@@ -24,13 +24,13 @@ if (not(isempty(k)))
             && centrePrisme(3)-(dimensionPrisme(3)/2) < z ...
             && centrePrisme(3)+(dimensionPrisme(3)/2) > z)
         numPlan = -1;
-        if(valeurX == 3)
+        if(valeurY == 3)
             numPlan = 3;
-        elseif(valeurX == 5)
+        elseif(valeurY == 5)
             numPlan = 4;
         end
             
-        ajoutCollision = [double(valeurX), double(y), double(z),numPlan];
+        ajoutCollision = [double(x), double(valeurY), double(z),numPlan];
     else
         ajoutCollision = [];
     end    

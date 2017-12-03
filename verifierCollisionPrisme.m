@@ -1,5 +1,5 @@
 function [collisionPrisme, ptCollision, face] = verifierCollisionPrisme(ut,ancienPtCollision)
-
+face = -1;
 % jai decider que ptCollision allait retourner quelque chose de la forme
 % [x, y, z, numeroPlanCollision]
 

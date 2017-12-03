@@ -81,10 +81,17 @@ for n = 1:N
                         ptsAColorier(n+((m-1)*M),:) = [x y z face]; %Verifier la correspondance des dimentions de matrices
                         
                     else % entre en collision avec le cylindre
-                        [~, ptCollision] = verifierCollisionCylindre(ut,ancienPtCollision, true);
+<<<<<<< HEAD
+                        [~, ptCollision] = verifierCollisionCylindre(ut,ancienPtCollision);
                         distTotale = distTotale + calculNorme(ancienPtCollision,ptCollision);
                         
                         estReflechi = verifierReflexion(ptCollision,ut,nin,nout);
+=======
+                        [~, ptCollision] = verifierCollisionCylindre(ut,ancienPtCollision, true);
+                        distTotale = distTotale + calculNorme(ancienPtCollision,ptCollision);
+                        
+                        estReflechi = verifierReflexion(ptCollision,ut,nout,nin);
+>>>>>>> Fonction-verifierCollisionCylindre
                        
                         if(estReflechi) %reste dans le cylindre (reflexion interne)
                             [i, ~, ~] = calculVecteursUnitairesijk(ut,ptCollision);

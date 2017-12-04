@@ -24,9 +24,9 @@ if (not(isempty(k)))
             && centrePrisme(3)-(dimensionPrisme(3)/2) < z ...
             && centrePrisme(3)+(dimensionPrisme(3)/2) > z)
         numPlan = -1;
-        if(valeurY == 3)
+        if(valeurY == 0.03)
             numPlan = 3;
-        elseif(valeurY == 5)
+        elseif(valeurY == 0.05)
             numPlan = 4;
         end
             

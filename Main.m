@@ -13,7 +13,10 @@
 [nout,nin,poso] = getDonneesCas(1);
 [xi, yi, zi, face] = Devoir4(nout,nin,poso);
 
-graphique(poso,1,1,1,1);
+graphique(poso,xi,yi,zi,face);
+
+%test
+%graphique(poso,1,1,1,1);
 
 %disp('------ Essai 1 ------');
 %graphique

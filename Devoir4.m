@@ -100,15 +100,7 @@ for n = 1:N
 end
 
 % 4) Remplir les vecteurs xi yi zi face � l'aide de la matrice ptsAColorier
-
-xi = zeros(nbPtsAColorier);
-yi = zeros(nbPtsAColorier);
-zi = zeros(nbPtsAColorier);
-face = zeros(nbPtsAColorier);
-
-for p = 1:nbPtsAColorier
-    xi(p) = ptsAColorier(p,1);
-    yi(p) = ptsAColorier(p,2);
-    zi(p) = ptsAColorier(p,3);
-    face(p) = ptsAColorier(p,4);
-end
+xi = ptsAColorier(1:nbPtsAColorier,1);
+yi = ptsAColorier(1:nbPtsAColorier,2);
+zi = ptsAColorier(1:nbPtsAColorier,3);
+face = ptsAColorier(1:nbPtsAColorier,4);

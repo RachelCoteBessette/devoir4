@@ -29,7 +29,7 @@ end
 
 sinAngle2 = (n1/n2)*sin(angle1);
 
-if(sinAngle2>1)
+if(abs(sinAngle2)>1)
     estReflechi = true;
 else
     estReflechi = false;

@@ -45,34 +45,34 @@ function [collisionCylindre, ptCollision] = verifierCollisionCylindre(u, poso, e
 
 % Cette equation suppose aucune restriction en z (cylindre avec z infini)
 
-syms k; 
-equ = rayonCylindre.^2 == (k*u(1) + poso(1) - centreCylindre(1)).^2 + (k*u(2) + poso(2) - centreCylindre(2)).^2;
+%syms k; 
+%equ = rayonCylindre.^2 == (k*u(1) + poso(1) - centreCylindre(1)).^2 + (k*u(2) + poso(2) - centreCylindre(2)).^2;
 
 % sol contient possiblement 0  ou 2 solutions 
 % sil y a 2 sol : parmis ces solutions, une seule nous interesse
-sol = vpasolve(equ, k);
+%sol = vpasolve(equ, k);
 
 a = u(1).^2 + u(2).^2;
-b = 2*u(1)*poso(1) + 2*u(2)*poso(2) - 8*u(1) - 8 * u(2);
-c = poso(1).^2+ poso(2).^2 - 8* poso(1) - 8 * poso(2) + 32 - rayonCylindre.^2;
+b = 2*u(1)*poso(1) + 2*u(2)*poso(2) - 0.08*u(1) - 0.08 * u(2);
+c = poso(1).^2+ poso(2).^2 - 0.08* poso(1) - 0.08 * poso(2) + 0.0032 - rayonCylindre.^2;
 
-[tmpSol1, tmpSol2] = resoudreEquationQuadratique(a,b,c);
+[sol1, sol2] = resoudreEquationQuadratique(a,b,c);
 
 % je veux retirer les resultats contenant des nombres imaginaires
-real_sol = sol(imag(sol) == 0);
+%real_sol = sol(imag(sol) == 0);
 
 
 pointCollisionAValiderEnZ = [];
 
-if (isempty(real_sol)) % si je nai pas de resultats => pas de collision
+if (not(isreal(sol1)) || not(isnan(sol1)) || not(isreal(sol2)) || not(isnan(sol2))) % si je nai pas de resultats => pas de collision
     collisionCylindre = false;
     ptCollision = [];
     return;
     
 else  % si jai 2 resultats => collision possible
     % sortir les deux points de collisions
-    pointCollision1 = [real_sol(1) * u(1) + poso(1), real_sol(1) * u(2) + poso(2), real_sol(1) * u(3) + poso(3)];
-    pointCollision2 = [real_sol(2) * u(1) + poso(1), real_sol(2) * u(2) + poso(2), real_sol(2) * u(3) + poso(3)];
+    pointCollision1 = [sol1 * u(1) + poso(1), sol1 * u(2) + poso(2), sol1 * u(3) + poso(3)];
+    pointCollision2 = [sol2 * u(1) + poso(1), sol2 * u(2) + poso(2), sol2 * u(3) + poso(3)];
 
     if (estDsCylindre)
         % discarter le dernier point ou il y a eu collision (parametre poso)

@@ -12,7 +12,7 @@ function [ut] = calculRefraction(ui,i,k, nout, nin)
 
 %  Vérifier si le rayon est réfléchi ou entre dans le cylindre
 sini = dot(ui, k);
-sint = nin / nout * sini;
+sint = nout / nin * sini;
     
 cost = cos(asin(sint));
 ut = -cost * i + sint * k;

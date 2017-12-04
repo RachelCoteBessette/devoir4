@@ -64,7 +64,8 @@ c = poso(1).^2+ poso(2).^2 - 0.08* poso(1) - 0.08 * poso(2) + 0.0032 - rayonCyli
 
 pointCollisionAValiderEnZ = [];
 
-if (not(isreal(sol1)) || isnan(sol1) || not(isreal(sol2)) || isnan(sol2)) % si je nai pas de resultats => pas de collision
+if (not(isreal(sol1)) || isnan(sol1) || not(isreal(sol2)) || isnan(sol2) || ...
+        isinf(sol1) || isinf(sol2)) % si je nai pas de resultats => pas de collision
     collisionCylindre = false;
     ptCollision = [];
     return;
@@ -117,9 +118,10 @@ else %sil est hors limite en z
             z = centreCylindre(3) -hauteurCylindre/2;
         end
         % trouver le k dans lequation parametrique suivante : z = k * u.z + r0.z
-        syms valeurK;
-        equ = z == valeurK * u(3) + poso(3);
-        solK = vpasolve(equ, valeurK);
+        %syms valeurK;
+        %equ = z == valeurK * u(3) + poso(3);
+        %solK = vpasolve(equ, valeurK);
+        solK = (u(3) + poso(3))/z;
         x = solK * u(1) + poso(1);
         y = solK * u(2) + poso(2);
         

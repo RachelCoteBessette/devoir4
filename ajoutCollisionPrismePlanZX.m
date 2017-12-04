@@ -2,13 +2,9 @@ function [ajoutCollision] = ajoutCollisionPrismePlanZX(valeurY, u, ancienPtColli
 ajoutCollision = [];
 [dimensionPrisme, centrePrisme] = getConstantesPrisme();
 % pour aider a la comprehension de lequation : vectUnitaireNormalAuPlanXZ = [0 1 0];
-%syms valeurK;
-%equ = valeurY == valeurK * u(2) + ancienPtCollision(2);
-%valeurK = vpasolve(equ, valeurK);
+
 k = (valeurY - ancienPtCollision(2))/u(2);
 
-%enlever valeurs imaginaires il y en a 
-%k = valeurK(imag(valeurK) == 0);
 % if the sln has no imaginary numbers and is not empty (found a k1)
 if (not(isinf(k)) && not(isnan(k))) 
     if (not(size(k,1) == 1))

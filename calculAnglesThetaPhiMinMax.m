@@ -1,5 +1,4 @@
-function [thetaMin, thetaMax, phiMin, phiMax] = calculAnglesThetaPhiMinMax(poso);
-
+function [thetaMin, thetaMax, phiMin, phiMax] = calculAnglesThetaPhiMinMax(poso)
 %
 % Fonction qui retourne les angles maximums et minimaux polaire et azimutal
 % par rapport à la position de l'observateur afin de couvrir tout le
@@ -46,7 +45,6 @@ for i =1:n
         thetaMin = angleTemp;
     end
 end
-
 
 pts(1,:) = [(cos(angleObs)*R + rc(1)) (sin(angleObs)*R + rc(2)) 0];
 pts(2,:) = [(cos(angleObs+deg2rad(90))*R + rc(1)) (sin(angleObs+deg2rad(90))*R + rc(2)) 0];

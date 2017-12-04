@@ -16,9 +16,9 @@ function [xi, yi, zi, face] = Devoir4(nout,nin,poso)
 %
 
 % Nombre de division de l'angle theta (polaire) (par rapport a l'Axe z)
-N = 100; %Arbitraire � revoir
+N = 100;
 % Nombre de division de l'angle phi (azimut) (par rapport a l'Axe x)
-M = 99; %Arbitraire � revoir
+M = 99;
 
 % Structure temporaire permettant de contenir les informations des pts a
 % colorier
@@ -47,7 +47,6 @@ for n = 1:N
 
         %vecteur unitaire repr�sentant la direction dans laquelle le rayon
         %par de l'obervateur (u)
-
         u = calculDirectionObs(theta,phi);
 
         % Fonction qui trouve le pt de collision (collisionCylindre est un boolean)

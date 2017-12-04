@@ -11,7 +11,6 @@ function [collisionCylindre, ptCollision] = verifierCollisionCylindre(u, poso, e
 
 %  sln: 'plugger' la formule de la doite 3d dans la formule du cylindre
 
-% ----tests : a enlever lorsque pu necessaire
 %-----------------lorsquon part de lexterieur du cyl----------------%
 %u = [0.01/sqrt(0.0027), 0.01/sqrt(0.0027), 0.05/sqrt(0.0027)];
 %poso = [0,0,0];  
@@ -45,22 +44,11 @@ function [collisionCylindre, ptCollision] = verifierCollisionCylindre(u, poso, e
 
 % Cette equation suppose aucune restriction en z (cylindre avec z infini)
 
-%syms k; 
-%equ = rayonCylindre.^2 == (k*u(1) + poso(1) - centreCylindre(1)).^2 + (k*u(2) + poso(2) - centreCylindre(2)).^2;
-
-% sol contient possiblement 0  ou 2 solutions 
-% sil y a 2 sol : parmis ces solutions, une seule nous interesse
-%sol = vpasolve(equ, k);
-
 a = u(1).^2 + u(2).^2;
 b = 2*u(1)*poso(1) + 2*u(2)*poso(2) - 0.08*u(1) - 0.08 * u(2);
 c = poso(1).^2+ poso(2).^2 - 0.08* poso(1) - 0.08 * poso(2) + 0.0032 - rayonCylindre.^2;
 
 [sol1, sol2] = resoudreEquationQuadratique(a,b,c);
-
-% je veux retirer les resultats contenant des nombres imaginaires
-%real_sol = sol(imag(sol) == 0);
-
 
 pointCollisionAValiderEnZ = [];
 

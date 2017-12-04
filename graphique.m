@@ -19,15 +19,6 @@ hold on % permet d'ajouter d'autre chose au graphique deja existent (superpositi
 scatter3(poso(1),poso(2),poso(3),'*');
 
 % Ajout de l'image
-
-%Pour faire des tests
-% xi = [0.0343826724445843;0.0300000000000000;0.0300000000000000;0.0395064992005808;0.0344707054964283;0.0300000000000000];
-% yi = [0.0300000000000000;0.0343826724445843;0.0456406538625719;0.0344707054964283;0.0395064992005808;0.0456406538625719];
-% zi = [0.146675545038657;0.146675545038657;0.165715196837838;0.120000000000000;0.120000000000000;0.122919367332604];
-% face = [3;1;1;5;5;1];
-
-%scatter3(0.1,0.1,0.1,'.','r'); %exemple pour dessiner un pt
-
 %Changer les chiffres dans face par les couleurs
 color = zeros(length(face),3);
 s = zeros(length(face),1);

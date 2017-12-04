@@ -1,5 +1,4 @@
 function [i, j, k] = calculVecteursUnitairesijk(u,ptCollision,dsCylindre)
-
 %
 % Calcul des vecteurs unitaires i j k
 %
@@ -20,5 +19,4 @@ else
 end
 
 j = cross(u,i)/norm(cross(u,i));
-
 k = cross(i,j);

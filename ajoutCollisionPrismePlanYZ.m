@@ -3,13 +3,8 @@ ajoutCollision = [];
 [dimensionPrisme, centrePrisme] = getConstantesPrisme();
 % note pour aider a la comprehension de lequation : vectUnitaireNormalAuPlanYZ = [1 0 0];
 
-%syms valeurK;
-%equ = valeurX == valeurK * u(1) + ancienPtCollision(1);
-%valeurK = vpasolve(equ, valeurK);
 k = (valeurX - ancienPtCollision(1))/u(1);
 
-%enlever valeurs imaginaires il y en a 
-%k = valeurK(imag(valeurK) == 0);
 % if the sln has no imaginary numbers and is not empty (found a k1)
 if (not(isinf(k)) && not(isnan(k))) % si on croise donc le plan x = 3
     if (not(size(k,1) == 1))

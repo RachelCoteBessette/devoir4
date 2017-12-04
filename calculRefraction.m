@@ -9,8 +9,6 @@ function [ut] = calculRefraction(ui,i,k, nout, nin)
 % nout : indice de refraction 1
 % nin : indice de refraction 2
 
-
-%  Vérifier si le rayon est réfléchi ou entre dans le cylindre
 sini = dot(ui, k);
 sint = nout / nin * sini;
     

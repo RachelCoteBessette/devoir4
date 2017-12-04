@@ -10,7 +10,7 @@ k = (valeurY - ancienPtCollision(2))/u(2);
 %enlever valeurs imaginaires il y en a 
 %k = valeurK(imag(valeurK) == 0);
 % if the sln has no imaginary numbers and is not empty (found a k1)
-if (not(isempty(k))) 
+if (not(isinf(k)) && not(isnan(k))) 
     if (not(size(k,1) == 1))
         disp("****!*!*!*!* ATTENTION Fonction: ajoutCollisionPrismePlanZX, IL Y A UNE DROITE QUI TOMBE PARALLELE A UNE FACE DU RECT, CETTE SITUATION NEST PAS GEREE");
         ajoutCollision = [];
@@ -34,5 +34,7 @@ if (not(isempty(k)))
         ajoutCollision = [double(x), double(valeurY), double(z),numPlan];
     else
         ajoutCollision = [];
-    end    
+    end
+else
+     disp("ajoutCollisionPrismeYZ: ne rentre pas en collision avec plan ZX");
 end

@@ -5,15 +5,17 @@ ajoutCollision = [];
 
 [dimensionPrisme, centrePrisme] = getConstantesPrisme();
 
-syms valeurK;
-equ = valeurZ == valeurK * u(3) + ancienPtCollision(3);
-valeurK = solve(equ, valeurK);
+%syms valeurK;
+%equ = valeurZ == valeurK * u(3) + ancienPtCollision(3);
+%valeurK = vpasolve(equ, valeurK);
 
 %enlever valeurs imaginaires il y en a 
-k = valeurK(imag(valeurK) == 0);
+%k = valeurK(imag(valeurK) == 0);
+
+k = (valeurZ - ancienPtCollision(3))/u(3);
 
 % if the sln has no imaginary numbers and is not empty (found a k1)
-if (not(isempty(k)))
+if (not(isinf(k)) && not(isnan(k)))
     if (not(size(k,1) == 1))
         disp("****!*!*!*!* ATTENTION Fonction: ajoutCollisionPrismePlanXY, IL Y A UNE DROITE QUI TOMBE PARALLELE A UNE FACE DU RECT, CETTE SITUATION NEST PAS GEREE");
         ajoutCollision = [];
@@ -37,5 +39,7 @@ if (not(isempty(k)))
         ajoutCollision = [double(x), double(y), double(valeurZ),numPlan];
     else
         ajoutCollision = [];
-    end    
+    end
+else
+    disp("ajoutCollisionPrismePlanXY : finds no collision with plane XY");
 end

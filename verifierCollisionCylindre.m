@@ -44,12 +44,13 @@ function [collisionCylindre, ptCollision] = verifierCollisionCylindre(u, poso, e
 [rayonCylindre, hauteurCylindre, centreCylindre] = getConstantesCylindre();
 
 % Cette equation suppose aucune restriction en z (cylindre avec z infini)
-syms k;
+
+syms k; 
 equ = rayonCylindre.^2 == (k*u(1) + poso(1) - centreCylindre(1)).^2 + (k*u(2) + poso(2) - centreCylindre(2)).^2;
 
 % sol contient possiblement 0  ou 2 solutions 
 % sil y a 2 sol : parmis ces solutions, une seule nous interesse
-sol = solve(equ, k);
+sol = vpasolve(equ, k);
 
 % je veux retirer les resultats contenant des nombres imaginaires
 real_sol = sol(imag(sol) == 0);
@@ -111,7 +112,7 @@ else %sil est hors limite en z
         % trouver le k dans lequation parametrique suivante : z = k * u.z + r0.z
         syms valeurK;
         equ = z == valeurK * u(3) + poso(3);
-        solK = solve(equ, valeurK);
+        solK = vpasolve(equ, valeurK);
         x = solK * u(1) + poso(1);
         y = solK * u(2) + poso(2);
         

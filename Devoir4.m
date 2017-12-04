@@ -16,9 +16,9 @@ function [xi, yi, zi, face] = Devoir4(nout,nin,poso)
 %
 
 % Nombre de division de l'angle theta (polaire) (par rapport a l'Axe z)
-N = 100; %Arbitraire � revoir
+N = 49; %Arbitraire � revoir
 % Nombre de division de l'angle phi (azimut) (par rapport a l'Axe x)
-M = 100; %Arbitraire � revoir
+M = 19; %Arbitraire � revoir
 
 % Structure temporaire permettant de contenir les informations des pts a
 % colorier

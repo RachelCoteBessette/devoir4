@@ -52,8 +52,15 @@ equ = rayonCylindre.^2 == (k*u(1) + poso(1) - centreCylindre(1)).^2 + (k*u(2) + 
 % sil y a 2 sol : parmis ces solutions, une seule nous interesse
 sol = vpasolve(equ, k);
 
+a = u(1).^2 + u(2).^2;
+b = 2*u(1)*poso(1) + 2*u(2)*poso(2) - 8*u(1) - 8 * u(2);
+c = poso(1).^2+ poso(2).^2 - 8* poso(1) - 8 * poso(2) + 32 - rayonCylindre.^2;
+
+[tmpSol1, tmpSol2] = resoudreEquationQuadratique(a,b,c);
+
 % je veux retirer les resultats contenant des nombres imaginaires
 real_sol = sol(imag(sol) == 0);
+
 
 pointCollisionAValiderEnZ = [];
 

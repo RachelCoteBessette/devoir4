@@ -12,7 +12,6 @@
 %sample data for now
 [nout,nin,poso] = getDonneesCas(1);
 [xi, yi, zi, face] = Devoir4(nout,nin,poso);
-
 graphique(poso,xi,yi,zi,face);
 
 %test
@@ -21,14 +20,15 @@ graphique(poso,xi,yi,zi,face);
 %disp('------ Essai 1 ------');
 %graphique
 %--------------------------------cas 2 -----------------------%
-%[nout,nin,poso] = getDonneesCas(2);
-%[xi, yi, zi, face] = Devoir4(nout,nin,poso);
-
+[nout,nin,poso] = getDonneesCas(2);
+[xi, yi, zi, face] = Devoir4(nout,nin,poso);
+graphique(poso, xi, yi, zi, face);
 %--------------------------------cas 3 -----------------------%
-%[nout,nin,poso] = getDonneesCas(3);
-%[xi, yi, zi, face] = Devoir4(nout,nin,poso);
-
+[nout,nin,poso] = getDonneesCas(3);
+[xi, yi, zi, face] = Devoir4(nout,nin,poso);
+graphique(poso, xi, yi, zi, face);
 %--------------------------------cas 4 -----------------------%
-%[nout,nin,poso] = getDonneesCas(4);
-%[xi, yi, zi, face] = Devoir4(nout,nin,poso);
+[nout,nin,poso] = getDonneesCas(4);
+[xi, yi, zi, face] = Devoir4(nout,nin,poso);
+graphique(poso,xi,yi,zi,face);
 

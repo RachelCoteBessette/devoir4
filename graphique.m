@@ -1,5 +1,11 @@
 function graphique(poso, xi, yi, zi, face)
 
+% Trouve azimut et elevation pour view()
+[~, ~, rb] = getConstantesCylindre();
+a = -45;
+elevation = acos(norm([(rb(1)-poso(1)) (rb(2)-poso(2))])/(norm(rb-poso)));
+e =-rad2deg(elevation);
+
 % Dessin du cylindre
 [R, h, rc] = getConstantesCylindre();
 [x,y,z] = cylinder;
@@ -46,5 +52,7 @@ for i=1:length(face)
 end
 
 scatter3(xi,yi,zi,s,color,'.');
+
+view(a,e);
 
 hold off

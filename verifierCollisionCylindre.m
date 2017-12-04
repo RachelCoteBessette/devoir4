@@ -64,7 +64,7 @@ c = poso(1).^2+ poso(2).^2 - 0.08* poso(1) - 0.08 * poso(2) + 0.0032 - rayonCyli
 
 pointCollisionAValiderEnZ = [];
 
-if (not(isreal(sol1)) || not(isnan(sol1)) || not(isreal(sol2)) || not(isnan(sol2))) % si je nai pas de resultats => pas de collision
+if (not(isreal(sol1)) || isnan(sol1) || not(isreal(sol2)) || isnan(sol2)) % si je nai pas de resultats => pas de collision
     collisionCylindre = false;
     ptCollision = [];
     return;
